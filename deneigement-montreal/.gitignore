@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Cache HTTP d'osmnx (les graphes utiles sont conservés dans data/*.graphml)
+cache/
+data/cache/
+
+# LaTeX (artefacts de compilation)
+rapport/*.aux
+rapport/*.log
+rapport/*.out
+rapport/*.toc
+rapport/*.synctex.gz
+
+# Système
+.DS_Store
+Thumbs.db

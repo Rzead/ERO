@@ -1,0 +1,50 @@
+[
+  {
+    "secteur": "Outremont",
+    "voirie_km": 69.53,
+    "S1_km": 90.6,
+    "S1_cout1": 610,
+    "S2_km": 105.7,
+    "S2_cout1": 628,
+    "S3_km": 80.9,
+    "S3_cout1": 598,
+    "flotte_reco": 2,
+    "cout_flotte": 1102.9
+  },
+  {
+    "secteur": "Verdun",
+    "voirie_km": 101.75,
+    "S1_km": 138.1,
+    "S1_cout1": 668,
+    "S2_km": 172.6,
+    "S2_cout1": 711,
+    "S3_km": 110.3,
+    "S3_cout1": 634,
+    "flotte_reco": 2,
+    "cout_flotte": 1145.44
+  },
+  {
+    "secteur": "Anjou",
+    "voirie_km": 220.59,
+    "S1_km": 362.4,
+    "S1_cout1": 944,
+    "S2_km": 399.7,
+    "S2_cout1": 990,
+    "S3_km": 265.0,
+    "S3_cout1": 824,
+    "flotte_reco": 4,
+    "cout_flotte": 2353.11
+  },
+  {
+    "secteur": "Rivière-des-Prairies–Pointe-aux-Trembles",
+    "voirie_km": 706.8,
+    "S1_km": 1055.1,
+    "S1_cout1": 1796,
+    "S2_km": 1160.5,
+    "S2_cout1": 1926,
+    "S3_km": 785.8,
+    "S3_cout1": 1465,
+    "flotte_reco": 13,
+    "cout_flotte": 7634.41
+  }
+]

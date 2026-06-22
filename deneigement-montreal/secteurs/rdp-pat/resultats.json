@@ -1,0 +1,357 @@
+{
+  "secteur": "Rivière-des-Prairies–Pointe-aux-Trembles",
+  "cle": "rdp-pat",
+  "reseau": {
+    "n_noeuds": 1910,
+    "n_arcs": 5191,
+    "longueur_totale_km": 706.8,
+    "fortement_connexe": true
+  },
+  "voirie": {
+    "axes_structurants_km": 42.53,
+    "voies_collectrices_km": 123.79,
+    "desserte_locale_km": 540.48,
+    "services_essentiels_km": 252.85
+  },
+  "scenarios": {
+    "S1": {
+      "nom": "Axes d'abord",
+      "stats": {
+        "required_m": 706795.71,
+        "deadhead_m": 348298.88,
+        "total_m": 1055094.59,
+        "required_km": 706.8,
+        "deadhead_km": 348.3,
+        "total_km": 1055.09,
+        "deadhead_ratio": 0.49,
+        "n_edges_circuit": 7618
+      },
+      "clearing": {
+        "axes_structurants": {
+          "km": 106.8,
+          "h": 10.68,
+          "n": 236
+        },
+        "voies_collectrices": {
+          "km": 258.46,
+          "h": 25.85,
+          "n": 833
+        },
+        "desserte_locale": {
+          "km": 1052.77,
+          "h": 105.28,
+          "n": 4122
+        },
+        "services_essentiels": {
+          "km": 1052.77,
+          "h": 105.28,
+          "n": 1762
+        },
+        "fin_totale": {
+          "km": 1052.77,
+          "h": 105.28,
+          "n": 5191
+        }
+      },
+      "cost_1vehicule": {
+        "distance_km": 1055.09,
+        "duration_h": 105.51,
+        "fixed": 500.0,
+        "km": 1160.6,
+        "hourly": 135.56,
+        "total": 1796.17
+      },
+      "passes": [
+        {
+          "nom": "Passe 1",
+          "required_m": 42528.11,
+          "deadhead_m": 64280.48,
+          "total_m": 106808.59,
+          "required_km": 42.53,
+          "deadhead_km": 64.28,
+          "total_km": 106.81,
+          "deadhead_ratio": 1.51,
+          "n_edges_required": 236,
+          "n_edges_circuit": 518
+        },
+        {
+          "nom": "Passe 2",
+          "required_m": 123786.76,
+          "deadhead_m": 26269.05,
+          "total_m": 150055.81,
+          "required_km": 123.79,
+          "deadhead_km": 26.27,
+          "total_km": 150.06,
+          "deadhead_ratio": 0.21,
+          "n_edges_required": 833,
+          "n_edges_circuit": 972
+        },
+        {
+          "nom": "Passe 3",
+          "required_m": 540480.84,
+          "deadhead_m": 254496.94,
+          "total_m": 794977.78,
+          "required_km": 540.48,
+          "deadhead_km": 254.5,
+          "total_km": 794.98,
+          "deadhead_ratio": 0.47,
+          "n_edges_required": 4122,
+          "n_edges_circuit": 6088
+        }
+      ]
+    },
+    "S2": {
+      "nom": "Services essentiels",
+      "stats": {
+        "required_m": 706795.71,
+        "deadhead_m": 453688.9,
+        "total_m": 1160484.61,
+        "required_km": 706.8,
+        "deadhead_km": 453.69,
+        "total_km": 1160.48,
+        "deadhead_ratio": 0.64,
+        "n_edges_circuit": 8596
+      },
+      "clearing": {
+        "axes_structurants": {
+          "km": 1156.79,
+          "h": 115.68,
+          "n": 236
+        },
+        "voies_collectrices": {
+          "km": 1132.42,
+          "h": 113.24,
+          "n": 833
+        },
+        "desserte_locale": {
+          "km": 1156.76,
+          "h": 115.68,
+          "n": 4122
+        },
+        "services_essentiels": {
+          "km": 414.42,
+          "h": 41.44,
+          "n": 1762
+        },
+        "fin_totale": {
+          "km": 1156.79,
+          "h": 115.68,
+          "n": 5191
+        }
+      },
+      "cost_1vehicule": {
+        "distance_km": 1160.48,
+        "duration_h": 116.05,
+        "fixed": 500.0,
+        "km": 1276.53,
+        "hourly": 149.26,
+        "total": 1925.8
+      },
+      "passes": [
+        {
+          "nom": "Passe 1",
+          "required_m": 252853.57,
+          "deadhead_m": 161576.61,
+          "total_m": 414430.18,
+          "required_km": 252.85,
+          "deadhead_km": 161.58,
+          "total_km": 414.43,
+          "deadhead_ratio": 0.64,
+          "n_edges_required": 1762,
+          "n_edges_circuit": 2965
+        },
+        {
+          "nom": "Passe 2",
+          "required_m": 453942.14,
+          "deadhead_m": 284784.54,
+          "total_m": 738726.68,
+          "required_km": 453.94,
+          "deadhead_km": 284.78,
+          "total_km": 738.73,
+          "deadhead_ratio": 0.63,
+          "n_edges_required": 3429,
+          "n_edges_circuit": 5554
+        }
+      ]
+    },
+    "S3": {
+      "nom": "Coût minimal",
+      "stats": {
+        "required_m": 706795.71,
+        "deadhead_m": 78979.53,
+        "total_m": 785775.23,
+        "required_km": 706.8,
+        "deadhead_km": 78.98,
+        "total_km": 785.78,
+        "deadhead_ratio": 0.11,
+        "n_edges_required": 5191,
+        "n_edges_circuit": 5694
+      },
+      "clearing": {
+        "axes_structurants": {
+          "km": 785.05,
+          "h": 78.5,
+          "n": 236
+        },
+        "voies_collectrices": {
+          "km": 783.2,
+          "h": 78.32,
+          "n": 833
+        },
+        "desserte_locale": {
+          "km": 785.76,
+          "h": 78.58,
+          "n": 4122
+        },
+        "services_essentiels": {
+          "km": 785.76,
+          "h": 78.58,
+          "n": 1762
+        },
+        "fin_totale": {
+          "km": 785.76,
+          "h": 78.58,
+          "n": 5191
+        }
+      },
+      "cost_1vehicule": {
+        "distance_km": 785.78,
+        "duration_h": 78.58,
+        "fixed": 500.0,
+        "km": 864.35,
+        "hourly": 100.55,
+        "total": 1464.9
+      },
+      "passes": [
+        {
+          "nom": "Tournée unique",
+          "required_m": 706795.71,
+          "deadhead_m": 78979.53,
+          "total_m": 785775.23,
+          "required_km": 706.8,
+          "deadhead_km": 78.98,
+          "total_km": 785.78,
+          "deadhead_ratio": 0.11,
+          "n_edges_required": 5191,
+          "n_edges_circuit": 5694
+        }
+      ]
+    }
+  },
+  "flotte_S3": {
+    "courbe": [
+      {
+        "n_vehicules": 1,
+        "cout_total": 1464.9,
+        "distance_totale_km": 785.78,
+        "temps_remise_service_h": 78.58,
+        "heures_sup": true
+      },
+      {
+        "n_vehicules": 2,
+        "cout_total": 1975.02,
+        "distance_totale_km": 795.3,
+        "temps_remise_service_h": 39.77,
+        "heures_sup": true
+      },
+      {
+        "n_vehicules": 3,
+        "cout_total": 2495.29,
+        "distance_totale_km": 813.08,
+        "temps_remise_service_h": 27.58,
+        "heures_sup": true
+      },
+      {
+        "n_vehicules": 4,
+        "cout_total": 2994.54,
+        "distance_totale_km": 813.77,
+        "temps_remise_service_h": 20.87,
+        "heures_sup": true
+      },
+      {
+        "n_vehicules": 5,
+        "cout_total": 3536.27,
+        "distance_totale_km": 849.0,
+        "temps_remise_service_h": 17.69,
+        "heures_sup": true
+      },
+      {
+        "n_vehicules": 6,
+        "cout_total": 4031.88,
+        "distance_totale_km": 846.73,
+        "temps_remise_service_h": 14.61,
+        "heures_sup": true
+      },
+      {
+        "n_vehicules": 7,
+        "cout_total": 4552.94,
+        "distance_totale_km": 865.16,
+        "temps_remise_service_h": 13.2,
+        "heures_sup": true
+      },
+      {
+        "n_vehicules": 8,
+        "cout_total": 5059.99,
+        "distance_totale_km": 872.19,
+        "temps_remise_service_h": 11.88,
+        "heures_sup": true
+      },
+      {
+        "n_vehicules": 9,
+        "cout_total": 5560.1,
+        "distance_totale_km": 873.58,
+        "temps_remise_service_h": 10.53,
+        "heures_sup": true
+      },
+      {
+        "n_vehicules": 10,
+        "cout_total": 6096.98,
+        "distance_totale_km": 904.86,
+        "temps_remise_service_h": 9.69,
+        "heures_sup": true
+      },
+      {
+        "n_vehicules": 11,
+        "cout_total": 6598.83,
+        "distance_totale_km": 907.49,
+        "temps_remise_service_h": 9.03,
+        "heures_sup": true
+      },
+      {
+        "n_vehicules": 12,
+        "cout_total": 7111.44,
+        "distance_totale_km": 918.44,
+        "temps_remise_service_h": 8.36,
+        "heures_sup": true
+      },
+      {
+        "n_vehicules": 13,
+        "cout_total": 7634.41,
+        "distance_totale_km": 937.53,
+        "temps_remise_service_h": 7.92,
+        "heures_sup": false
+      },
+      {
+        "n_vehicules": 14,
+        "cout_total": 8136.97,
+        "distance_totale_km": 939.64,
+        "temps_remise_service_h": 7.55,
+        "heures_sup": false
+      },
+      {
+        "n_vehicules": 15,
+        "cout_total": 8641.79,
+        "distance_totale_km": 943.63,
+        "temps_remise_service_h": 7.08,
+        "heures_sup": false
+      }
+    ],
+    "recommandation": {
+      "n_vehicules": 13,
+      "cout_total": 7634.41,
+      "distance_totale_km": 937.53,
+      "temps_remise_service_h": 7.92,
+      "heures_sup": false
+    }
+  }
+}
