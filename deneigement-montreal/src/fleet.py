@@ -16,6 +16,8 @@ les tronçons). Ce compromis fonde le modèle de coût « coût = f(nb véhicule
 from __future__ import annotations
 
 import networkx as nx
+import numpy as np
+from scipy.optimize import linear_sum_assignment
 
 from .cost import SPEED_KMH, summarize_fleet, vehicle_cost
 from .cpp import _cheapest_parallel_arc
@@ -41,18 +43,21 @@ def _connector(G, a, b):
     return out
 
 
-def split_route(G, route, k: int, depot=None):
+def split_route(G, route, k: int, depot=None, passes=None):
     """Découpe ``route`` en ``k`` tournées de véhicules (route-first split-second).
 
+    Si ``passes`` est fourni (multi-passes), affecte intelligemment les déneigeuses 
+    entre les passes pour minimiser le déplacement à vide (Algorithme Hongrois).
     Renvoie la liste des tournées (chacune une liste d'arcs ``(u, v, data)``).
     """
-    if k <= 1 or len(route) <= 1:
-        return [route]
-    if depot is None:
-        depot = route[0][0]
+    if k <= 1 or not passes or len(passes) <= 1:
+        if k <= 1 or len(route) <= 1:
+            return [route]
+        if depot is None:
+            depot = route[0][0]
 
-    total = _route_length_km(route)
-    target = total / k
+        total = _route_length_km(route)
+        target = total / k
 
     # Découpe en k tronçons contigus d'environ ``target`` km.
     chunks, cur, cur_km, idx = [], [], 0.0, 0
@@ -74,18 +79,94 @@ def split_route(G, route, k: int, depot=None):
         end = chunk[-1][1]
         v_route = _connector(G, depot, start) + chunk + _connector(G, end, depot)
         vehicles.append(v_route)
-    return vehicles
+        return vehicles
+
+    # --- Mode Multi-Passes optimisé ---
+    if depot is None:
+        for p in passes:
+            if p.get("route"):
+                depot = p["route"][0][0]
+                break
+        if depot is None:
+            depot = next(iter(G.nodes))
+
+    vehicles_routes = [[] for _ in range(k)]
+    current_positions = [depot] * k
+
+    for p_info in passes:
+        pass_circuit = p_info.get("route", [])
+        if not pass_circuit:
+            continue
+
+        total = _route_length_km(pass_circuit)
+        target = total / k
+
+        chunks, cur, cur_km = [], [], 0.0
+        for edge in pass_circuit:
+            cur.append(edge)
+            cur_km += float(edge[2].get("length", 0.0)) / 1000.0
+            if cur_km >= target and len(chunks) < k - 1:
+                chunks.append(cur)
+                cur, cur_km = [], 0.0
+        if cur:
+            chunks.append(cur)
+
+        # Compléter avec des tronçons vides si k > len(chunks)
+        while len(chunks) < k:
+            chunks.append([])
+
+        starts = [c[0][0] if c else None for c in chunks]
+
+        # Matrice de coût
+        cost_matrix = np.zeros((k, k))
+        for i, u in enumerate(current_positions):
+            try:
+                # Distances depuis la position courante du véhicule i
+                lengths = nx.single_source_dijkstra_path_length(G, u, weight="length")
+            except Exception:
+                lengths = {}
+            for j, v in enumerate(starts):
+                if v is None or u == v:
+                    cost_matrix[i, j] = 0.0
+                else:
+                    if v in lengths:
+                        cost_matrix[i, j] = lengths[v]
+                    else:
+                        cost_matrix[i, j] = 1e9
+
+        # Affectation optimale (Algorithme Hongrois)
+        row_ind, col_ind = linear_sum_assignment(cost_matrix)
+
+        new_positions = [None] * k
+        for i, j in zip(row_ind, col_ind):
+            v = starts[j]
+            chunk = chunks[j]
+            if v is not None:
+                vehicles_routes[i].extend(_connector(G, current_positions[i], v))
+            vehicles_routes[i].extend(chunk)
+            if chunk:
+                new_positions[i] = chunk[-1][1]
+            else:
+                new_positions[i] = current_positions[i]
+
+        current_positions = new_positions
+
+    # Retour au dépôt
+    for i, u in enumerate(current_positions):
+        vehicles_routes[i].extend(_connector(G, u, depot))
+
+    return vehicles_routes
 
 
-def fleet_distances_km(G, route, k: int, depot=None):
+def fleet_distances_km(G, route, k: int, depot=None, passes=None):
     """Distances (km) par véhicule pour un découpage en ``k`` tournées."""
-    vehicles = split_route(G, route, k, depot)
+    vehicles = split_route(G, route, k, depot, passes=passes)
     return [_route_length_km(v) for v in vehicles]
 
 
-def fleet_plan(G, route, k: int, depot=None, speed_kmh: float = SPEED_KMH):
+def fleet_plan(G, route, k: int, depot=None, speed_kmh: float = SPEED_KMH, passes=None):
     """Plan complet d'une flotte de ``k`` véhicules pour une tournée donnée."""
-    vehicles = split_route(G, route, k, depot)
+    vehicles = split_route(G, route, k, depot, passes=passes)
     distances = [_route_length_km(v) for v in vehicles]
     summary = summarize_fleet(distances, speed_kmh)
     summary["temps_remise_service_h"] = round(
@@ -93,14 +174,14 @@ def fleet_plan(G, route, k: int, depot=None, speed_kmh: float = SPEED_KMH):
     return {"vehicles": vehicles, "distances_km": distances, "summary": summary}
 
 
-def cost_vs_vehicles(G, route, k_max: int = 8, depot=None, speed_kmh: float = SPEED_KMH):
+def cost_vs_vehicles(G, route, k_max: int = 8, depot=None, speed_kmh: float = SPEED_KMH, passes=None):
     """Courbe coût = f(nb véhicules) : un point par k de 1 à ``k_max``.
 
     Renvoie une liste de dicts {k, cout_total, temps_remise_service_h, ...}.
     """
     rows = []
     for k in range(1, k_max + 1):
-        distances = fleet_distances_km(G, route, k, depot)
+        distances = fleet_distances_km(G, route, k, depot, passes=passes)
         s = summarize_fleet(distances, speed_kmh)
         rows.append({
             "n_vehicules": k,

@@ -90,7 +90,7 @@ def build_route(G, key, source=None):
     if key == "S3":
         # Postier chinois pur : optimum de distance, une seule passe.
         circuit, stats = directed_cpp(G, source=source)
-        return circuit, {"passes": [{"nom": "Tournée unique", **stats}], "stats": stats}
+        return circuit, {"passes": [{"nom": "Tournée unique", "route": circuit, **stats}], "stats": stats}
 
     route = []
     pos = source
@@ -105,7 +105,7 @@ def build_route(G, key, source=None):
         route.extend(_connector(G, pos, start, counter))
         route.extend(circ)
         pos = circ[-1][1]
-        pass_infos.append({"nom": f"Passe {i + 1}", **st})
+        pass_infos.append({"nom": f"Passe {i + 1}", "route": circ, **st})
     # Retour au dépôt.
     route.extend(_connector(G, pos, source, counter))
 

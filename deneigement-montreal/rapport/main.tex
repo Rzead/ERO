@@ -135,13 +135,7 @@ Postier rural dirigé & couvre un \emph{sous-ensemble} d'arcs & retenue pour les
 \label{tab:methodes}
 \end{table}
 
-Pour les scénarios priorisés, on couvre d'abord un sous-ensemble de rues : c'est
-le \emph{postier rural dirigé}, résolu par la même mécanique (connexion des
-composantes par plus courts chemins, rééquilibrage par flot à coût minimum,
-circuit eulérien). Pour la \textbf{flotte} de $k$ véhicules, on applique une
-heuristique « route d'abord, découpe ensuite » : la tournée d'un véhicule est
-découpée en $k$ tronçons de longueur égale, chacun relié au dépôt par un plus
-court chemin.
+Pour les scénarios priorisés, nécessitant plusieurs passes successives, on couvre d'abord un sous-ensemble de rues : c'est le \emph{postier rural dirigé}, résolu par la même mécanique. Pour la \textbf{flotte} de $k$ véhicules, on applique une heuristique « route d'abord, découpe ensuite » optimisée : chaque passe est découpée en $k$ tronçons de longueur égale. Entre deux passes, les véhicules sont réaffectés de la fin de leur tronçon actuel au début du tronçon suivant en minimisant la somme des déplacements à vide grâce à un \textbf{couplage biparti de poids minimum (Algorithme Hongrois)}. Cela garantit le respect strict des priorités tout en limitant la distance parcourue à vide.
 
 \subsection{Indicateurs génériques}
 Pour toute solution : distance totale parcourue (km), part de déplacements à vide
@@ -322,10 +316,7 @@ Aucun scénario n'est globalement supérieur : S3 est \emph{efficient} mais
 l'équité mais coûte cher et retarde la majorité. En pratique, une politique
 \emph{hybride} — services essentiels et axes structurants en première vague,
 puis desserte locale au coût minimal — combinerait l'essentiel des bénéfices ;
-notre outil permet d'en chiffrer le compromis. La forte part de déplacements à
-vide des scénarios priorisés (heuristique de postier rural) constitue une borne
-supérieure : un solveur de tournées plus fin la réduirait, ce qui resserrerait
-l'écart de coût avec S3 sans changer l'ordre des conclusions.
+notre outil permet d'en chiffrer le compromis. Bien que l'introduction du couplage par Algorithme Hongrois limite drastiquement les redondances inter-passes, la forte part de déplacements à vide due au postier rural constitue encore une borne supérieure : un solveur de tournées plus complexe la réduirait encore, sans pour autant changer l'ordre de nos conclusions.
 
 \begin{thebibliography}{9}\small
 \bibitem{edmonds1973} J.~Edmonds, E.~L.~Johnson. \emph{Matching, Euler tours and

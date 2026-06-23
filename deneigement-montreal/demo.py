@@ -79,8 +79,9 @@ def analyse_secteur(key, write_maps=True):
 
     # Dimensionnement de la flotte sur le scénario de référence S3.
     route_s3 = scen_results["S3"]["route"]
+    passes_s3 = scen_results["S3"]["passes"]
     depot = route_s3[0][0] if route_s3 else next(iter(G.nodes))
-    curve = cost_vs_vehicles(G, route_s3, k_max=15, depot=depot)
+    curve = cost_vs_vehicles(G, route_s3, k_max=15, depot=depot, passes=passes_s3)
     reco = recommend_fleet_size(curve, max_hours=8.0)
     print(f"  Flotte recommandée (≤ 8 h, S3) : {reco['n_vehicules']} véhicules · "
           f"{reco['temps_remise_service_h']} h · {reco['cout_total']:.0f} $.")
@@ -109,7 +110,7 @@ def analyse_secteur(key, write_maps=True):
         m0 = sector_map(G, routes=None, geoms=geoms, pois=pois)
         m0.save(os.path.join(out_dir, "carte_reseau.html"))
         # Carte des tournées (S3, flotte recommandée, animée, flocons).
-        vehicles = split_route(G, route_s3, reco["n_vehicules"], depot=depot)
+        vehicles = split_route(G, route_s3, reco["n_vehicules"], depot=depot, passes=passes_s3)
         m1 = sector_map(G, routes=vehicles, geoms=geoms, animate=True,
                         speed_kmh=SPEED_KMH, pois=pois)
         m1.save(os.path.join(out_dir, "carte_tournees_S3.html"))

@@ -24,13 +24,14 @@ def run_simulation(G_full, pois, scenario, n_vehicles, n_blocked=0, seed=0,
 
     result = evaluate_scenario(H, scenario, speed_kmh=speed_kmh)
     route = result["route"]
+    passes = result.get("passes")
     depot = route[0][0] if route else next(iter(H.nodes))
 
-    vehicles = split_route(H, route, n_vehicles, depot)
-    plan = fleet_plan(H, route, n_vehicles, depot=depot, speed_kmh=speed_kmh)
+    vehicles = split_route(H, route, n_vehicles, depot, passes=passes)
+    plan = fleet_plan(H, route, n_vehicles, depot=depot, speed_kmh=speed_kmh, passes=passes)
     access = accessibility_curve(H, route, speed_kmh=speed_kmh)
     curve = cost_vs_vehicles(H, route, k_max=max(k_max, n_vehicles), depot=depot,
-                             speed_kmh=speed_kmh)
+                             speed_kmh=speed_kmh, passes=passes)
     reco = recommend_fleet_size(curve, max_hours=8.0)
 
     return {
