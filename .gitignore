@@ -1,0 +1,54 @@
+# ---------------------------------------------------------------------------
+# .gitignore — projet ERO1 (déneigement Montréal)
+#
+# NB : certaines sorties générées sont VOLONTAIREMENT versionnées car ce sont
+# des livrables (data/*.graphml et *.gpkg pour le mode hors-ligne, les figures
+# rapport/figures/*.png, rapport/rapport.pdf, secteurs/*/*.html + resultats.json,
+# resultats/synthese.json). Elles ne sont donc pas ignorées ici.
+# ---------------------------------------------------------------------------
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# --- Environnements virtuels ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Caches outils ---
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# --- Cache HTTP d'osmnx (les graphes utiles sont conservés dans data/*.graphml) ---
+cache/
+data/cache/
+
+# --- LaTeX (artefacts de compilation) ---
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+
+# --- Éditeurs / IDE ---
+.vscode/
+.idea/
+*.swp
+*~
+
+# --- Système ---
+.DS_Store
+Thumbs.db
