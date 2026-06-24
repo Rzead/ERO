@@ -59,26 +59,26 @@ def split_route(G, route, k: int, depot=None, passes=None):
         total = _route_length_km(route)
         target = total / k
 
-    # Découpe en k tronçons contigus d'environ ``target`` km.
-    chunks, cur, cur_km, idx = [], [], 0.0, 0
-    for edge in route:
-        cur.append(edge)
-        cur_km += float(edge[2].get("length", 0.0)) / 1000.0
-        if cur_km >= target and len(chunks) < k - 1:
+        # Découpe en k tronçons contigus d'environ ``target`` km.
+        chunks, cur, cur_km = [], [], 0.0
+        for edge in route:
+            cur.append(edge)
+            cur_km += float(edge[2].get("length", 0.0)) / 1000.0
+            if cur_km >= target and len(chunks) < k - 1:
+                chunks.append(cur)
+                cur, cur_km = [], 0.0
+        if cur:
             chunks.append(cur)
-            cur, cur_km = [], 0.0
-    if cur:
-        chunks.append(cur)
 
-    # Chaque véhicule : dépôt -> tronçon -> dépôt.
-    vehicles = []
-    for chunk in chunks:
-        if not chunk:
-            continue
-        start = chunk[0][0]
-        end = chunk[-1][1]
-        v_route = _connector(G, depot, start) + chunk + _connector(G, end, depot)
-        vehicles.append(v_route)
+        # Chaque véhicule : dépôt -> tronçon -> dépôt.
+        vehicles = []
+        for chunk in chunks:
+            if not chunk:
+                continue
+            start = chunk[0][0]
+            end = chunk[-1][1]
+            v_route = _connector(G, depot, start) + chunk + _connector(G, end, depot)
+            vehicles.append(v_route)
         return vehicles
 
     # --- Mode Multi-Passes optimisé ---

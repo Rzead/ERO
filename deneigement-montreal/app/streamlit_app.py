@@ -52,8 +52,11 @@ def compute(sector, scenario, n_veh, n_blocked, seed):
     return sim, geoms, pois
 
 
-@st.cache_resource(show_spinner="Construction de la carte…")
 def build_map(sector, scenario, n_veh, n_blocked, seed, animate, base_style):
+    # On ne met PAS la carte folium en cache : un objet ``folium.Map`` est muté
+    # lors de son rendu par ``st_folium``, donc le réutiliser depuis un cache
+    # renvoie une carte déjà rendue → carte vide/cassée au relancement d'une
+    # simulation. Les calculs lourds restent, eux, mis en cache via ``compute``.
     sim, geoms, pois = compute(sector, scenario, n_veh, n_blocked, seed)
     return sector_map(sim["graph"], routes=sim["vehicles"], geoms=geoms,
                       animate=animate, speed_kmh=SPEED_KMH, pois=pois,
@@ -224,9 +227,14 @@ with st.expander("ℹ️ Explications — scénarios, indicateurs et lecture de 
 
 # --- Carte (pleine largeur) -------------------------------------------------
 st.subheader("Carte interactive")
-m = build_map(cfg["sector"], cfg["scenario"], cfg["n_veh"], cfg["n_blocked"],
-              cfg["seed"], cfg["animate"], cfg["base_style"])
-st_folium(m, height=640, use_container_width=True, returned_objects=[])
+with st.spinner("Construction de la carte…"):
+    m = build_map(cfg["sector"], cfg["scenario"], cfg["n_veh"], cfg["n_blocked"],
+                  cfg["seed"], cfg["animate"], cfg["base_style"])
+# Clé dépendant de la config : force le remontage du composant quand la
+# simulation change, au lieu de réutiliser un rendu de carte périmé.
+map_key = ("map_" + "_".join(str(cfg[k]) for k in
+           ("sector", "scenario", "n_veh", "n_blocked", "seed", "animate", "base_style")))
+st_folium(m, height=640, use_container_width=True, returned_objects=[], key=map_key)
 st.caption("Flocons ❄ = déneigeuses (faites glisser le curseur de temps en bas, "
            "ou ▶ pour rejouer). Marqueurs = services essentiels (cliquables, "
            "regroupés). Rouge hachuré = travaux. Couches et fond de carte "
