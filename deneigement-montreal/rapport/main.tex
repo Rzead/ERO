@@ -135,7 +135,28 @@ Postier rural dirigé & couvre un \emph{sous-ensemble} d'arcs & retenue pour les
 \label{tab:methodes}
 \end{table}
 
-Pour les scénarios priorisés, nécessitant plusieurs passes successives, on couvre d'abord un sous-ensemble de rues : c'est le \emph{postier rural dirigé}, résolu par la même mécanique. Pour la \textbf{flotte} de $k$ véhicules, on applique une heuristique « route d'abord, découpe ensuite » optimisée : chaque passe est découpée en $k$ tronçons de longueur égale. Entre deux passes, les véhicules sont réaffectés de la fin de leur tronçon actuel au début du tronçon suivant en minimisant la somme des déplacements à vide grâce à un \textbf{couplage biparti de poids minimum (Algorithme Hongrois)}. Cela garantit le respect strict des priorités tout en limitant la distance parcourue à vide.
+Pour les scénarios priorisés (S1, S2), nécessitant plusieurs passes successives, on couvre d'abord un sous-ensemble de rues : c'est le \emph{postier rural dirigé}, résolu par la même mécanique. 
+
+Le déploiement d'une \textbf{flotte} de $k$ véhicules sur ces scénarios a fait l'objet d'une optimisation algorithmique spécifique (cf. Tableau~\ref{tab:avant_apres}) pour pallier les limites majeures d'une approche de découpage naïve.
+
+\begin{table}[H]
+\centering\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{2.2cm}p{3.8cm}p{4.2cm}p{4.2cm}}
+\toprule
+& \textbf{Étape 1 : Découpage naïf global} & \textbf{Étape 2 : Découpage par passe (sans opti)} & \textbf{Étape 3 : Découpage avec Algorithme Hongrois}\\
+\midrule
+\textbf{Méthode} & Tournée globale découpée aveuglément en $k$. & Découpe de \emph{chaque} passe. Raccordement direct (véhicule $i \to$ tronçon $i$). & Découpe de \emph{chaque} passe. Couplage optimal inter-passes.\\
+\textbf{Priorités} & \textcolor{red}{\textbf{Violées}} (Certains commencent par la fin) & \textcolor{green!60!black}{\textbf{Respectées}} & \textcolor{green!60!black}{\textbf{Respectées}}\\
+\textbf{Déplacements} & Géographiquement continu. & Sous-optimal : croisements fréquents entre les véhicules. & \textbf{Optimisés} : Le couplage minimise la distance totale.\\
+\textbf{Impact} (Anjou, 4 véh, S1) & Deadhead : \textbf{161,8 km} & Deadhead : \textbf{180,4 km} \textcolor{red}{(+11,5 \%)} & Deadhead : \textbf{170,2 km} \textcolor{green!60!black}{(-10,2 km)}\\
+\bottomrule
+\end{tabular}
+\caption{Processus d'optimisation de l'heuristique de flotte pour les scénarios multi-passes (S1, S2).}
+\label{tab:avant_apres}
+\end{table}
+
+Ce tableau illustre parfaitement le processus d'optimisation : on constate d'abord que le modèle naïf ne respecte pas les priorités (Étape 1). En le forçant à les respecter (Étape 2), on détruit la continuité géographique, ce qui fait exploser les kilomètres à vide (+11,5 \%). L'introduction de l'algorithme hongrois (Étape 3) vient alors minimiser le surcoût de cette transition obligatoire, sauvant ainsi environ 10 km de deadhead par jour tout en garantissant le respect de la contrainte métier.
 
 \subsection{Indicateurs génériques}
 Pour toute solution : distance totale parcourue (km), part de déplacements à vide
