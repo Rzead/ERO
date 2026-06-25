@@ -49,33 +49,6 @@ spécifiques, et nous en analysons l'impact à l'aide d'une matrice éthique.
 
 \section{Les scénarios de priorisation et leur justification}
 
-\subsection{Pourquoi ces trois scénarios ?}
-Déneiger une ville n'est pas qu'un problème technique : c'est une \textbf{décision
-publique} qui répartit une ressource rare (les heures de déneigeuse) entre des
-usagers aux intérêts divergents. Or cette décision est tiraillée par trois
-objectifs légitimes mais \emph{inconciliables} simultanément :
-\begin{itemize}
-\item la \textbf{fluidité} du trafic et de l'économie (remettre les grands axes
-et les circuits de bus en circulation au plus vite) ;
-\item la \textbf{sécurité et l'équité d'accès} (garantir d'abord l'accès aux
-hôpitaux, écoles, casernes et aux populations vulnérables) ;
-\item la \textbf{maîtrise budgétaire} (déneiger au moindre coût pour le
-contribuable).
-\end{itemize}
-Chacun de ces objectifs est défendu par des parties prenantes réelles et
-correspond à des arbitrages effectivement débattus à Montréal : la Ville
-priorise déjà le réseau artériel et les circuits d'autobus~\cite{vdm,new18},
-tandis que le coût du déneigement est un enjeu politique récurrent~\cite{lef19,vezina20}.
-
-Nous avons donc retenu \textbf{trois scénarios qui incarnent chacun l'un de ces
-objectifs à l'état pur} : S1 (fluidité), S2 (sécurité/équité), S3 (coût). Ils ne
-sont pas des recettes à appliquer telles quelles, mais les \textbf{sommets du
-triangle de décision} : ils bornent l'espace des compromis possibles. Toute
-politique réaliste étant une pondération de ces trois extrêmes, comparer les
-extrêmes rend visibles, et chiffrables, les tensions qu'un décideur doit
-arbitrer (cf. la recommandation hybride, §\ref{sec:reco}). C'est précisément ce
-que notre outil permet de mesurer.
-
 \subsection{Définition des trois scénarios}
 Les trois scénarios traitent l'\textbf{intégralité} de la voirie ; ils diffèrent
 par l'\emph{ordre} de traitement. La priorisation repose sur la classification
@@ -109,15 +82,41 @@ pression budgétaire sur le déneigement est un enjeu récurrent à Montréal~\c
 sensibles ; équité non prise en compte. \emph{Indicateur} : coût total et
 distance à vide.
 
-\subsection{Analyse d'impact : une matrice éthique par scénario}
+\subsection{Pourquoi ces trois scénarios ?}
+Déneiger une ville n'est pas qu'un problème technique : c'est une \textbf{décision
+publique} qui répartit une ressource rare (les heures de déneigeuse) entre des
+usagers aux intérêts divergents. Or cette décision est tiraillée par trois
+objectifs légitimes mais \emph{inconciliables} simultanément :
+\begin{itemize}
+\item la \textbf{fluidité} du trafic et de l'économie (remettre les grands axes
+et les circuits de bus en circulation au plus vite) ;
+\item la \textbf{sécurité et l'équité d'accès} (garantir d'abord l'accès aux
+hôpitaux, écoles, casernes et aux populations vulnérables) ;
+\item la \textbf{maîtrise budgétaire} (déneiger au moindre coût pour le
+contribuable).
+\end{itemize}
+Chacun de ces objectifs est défendu par des parties prenantes réelles et
+correspond à des arbitrages effectivement débattus à Montréal : la Ville
+priorise déjà le réseau artériel et les circuits d'autobus~\cite{vdm,new18},
+tandis que le coût du déneigement est un enjeu politique récurrent~\cite{lef19,vezina20}.
+
+Nous avons donc retenu \textbf{trois scénarios qui incarnent chacun l'un de ces
+objectifs à l'état pur} : S1 (fluidité), S2 (sécurité/équité), S3 (coût). Ils ne
+sont pas des recettes à appliquer telles quelles, mais les \textbf{sommets du
+triangle de décision} : ils bornent l'espace des compromis possibles. Toute
+politique réaliste étant une pondération de ces trois extrêmes, comparer les
+extrêmes rend visibles, et chiffrables, les tensions qu'un décideur doit
+arbitrer (cf. la recommandation hybride, §\ref{sec:reco}). C'est précisément ce
+que notre outil permet de mesurer.
+
+\subsection{Analyse d'impact : Les matrices éthiques, selon le scénario}
 Pour évaluer chaque scénario, nous appliquons la \emph{matrice
 éthique}~\cite{mepham2006}, qui croise les \textbf{parties prenantes} et trois
 familles de valeurs : \emph{bien-être} (utilitarisme : qui gagne/perd en
 confort et sécurité ?), \emph{autonomie} (déontologie : respecte-t-on les
 choix et droits des personnes ?) et \emph{justice} (équité : la charge et les
-bénéfices sont-ils répartis équitablement ?). Une matrice par scénario
-(Tab.~\ref{tab:ethique_s1}–\ref{tab:ethique_s3}) en révèle les tensions
-propres ($+$ effet favorable, $-$ défavorable, $\pm$ ambivalent).
+bénéfices sont-ils répartis équitablement ?). Les matrices suivantes
+(Tab.~\ref{tab:ethique_s1}–\ref{tab:ethique_s3}) en révèlent les tensions ($+$ effet favorable, $-$ défavorable, $\pm$ ambivalent).
 
 \begin{table}[H]
 \centering\small
@@ -318,7 +317,7 @@ d'attente de chargement). Ces limites sont acceptables pour comparer des
 
 \section{Analyse des résultats}
 \label{sec:resultats}
-On illustre sur \textbf{Anjou} (220{,}6 km de voirie, seul secteur réunissant les
+L'ensemble des résultats chiffrés présentés ci-dessous a été extrait des simulations réalisées sur notre logiciel. On illustre sur \textbf{Anjou} (220{,}6 km de voirie, seul secteur réunissant les
 trois classes de rues), puis on généralise aux quatre secteurs.
 
 \begin{table}[H]
@@ -467,32 +466,15 @@ flotte) et des tableaux comparatifs.
 
 \begin{figure}[H]
 \centering
-\screenshot{figures/capture_accueil.png}{Barre latérale de configuration de la
-simulation : choix du secteur, du scénario de priorisation, du nombre de
-déneigeuses, des tronçons en travaux, du fond de carte et de l'animation.}
-\caption{Configuration de la simulation dans l'application.}
-\label{fig:capture_accueil}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\screenshot{figures/capture_carte.png}{Carte interactive : réseau coloré par
-priorité, marqueurs des services essentiels, déneigeuses animées (flocons) et
-légende. Placez le curseur de temps en cours de tournée pour montrer
-l'animation.}
-\caption{Carte interactive des tournées (avec, si possible, des tronçons en
-travaux pour illustrer le recalcul).}
-\label{fig:capture_carte}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\screenshot{figures/capture_graphiques.png}{Les deux graphiques (courbe
-d'accessibilité aux services essentiels dans le temps ; coût et temps de remise
-en service en fonction du nombre de déneigeuses) et les deux tableaux (remise en
-service par type de voie ; comparaison des trois scénarios).}
-\caption{Graphiques et tableaux de résultats.}
-\label{fig:capture_graphiques}
+\begin{minipage}{0.49\textwidth}
+  \screenshot{figures/capture_carte.png}{Carte interactive : réseau coloré par priorité, services et déneigeuses animées.}
+\end{minipage}
+\hfill
+\begin{minipage}{0.49\textwidth}
+  \screenshot{figures/capture_graphiques.png}{Graphiques et tableaux de résultats générés.}
+\end{minipage}
+\caption{À gauche : carte interactive des tournées. À droite : graphiques et tableaux comparatifs de la simulation.}
+\label{fig:capture_app}
 \end{figure}
 
 \subsection{L'export des tournées}
@@ -513,10 +495,12 @@ toutes les tournées et un résumé JSON de la configuration.
 
 \begin{figure}[H]
 \centering
-\screenshot{figures/capture_export.png}{À gauche : une trace \texttt{.gpx}
-ouverte dans un visualiseur (p. ex. \emph{GPX Studio} ou Google Earth) montrant
-le trajet et les points de passage horodatés. À droite : un extrait de la
-feuille de route \texttt{.csv} (étape, heure, action, rue).}
+\begin{minipage}{0.5\textwidth}
+  \screenshot{figures/capture_export.png}{À gauche : une trace \texttt{.gpx}
+  ouverte dans un visualiseur (p. ex. \emph{GPX Studio} ou Google Earth) montrant
+  le trajet et les points de passage horodatés. À droite : un extrait de la
+  feuille de route \texttt{.csv} (étape, heure, action, rue).}
+\end{minipage}
 \caption{Export d'une tournée : trace GPS horodatée et feuille de route.}
 \label{fig:capture_export}
 \end{figure}
