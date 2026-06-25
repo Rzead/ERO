@@ -13,6 +13,16 @@
 \usepackage{xcolor}
 \usepackage[hidelinks]{hyperref}
 
+% Capture d'écran : affiche l'image si elle existe, sinon un cadre indiquant
+% quoi y placer (le rapport compile dans les deux cas).
+% #1 = fichier image, #2 = description (cadre si absente).
+% La hauteur est bornée (keepaspectratio) pour qu'une capture ne dévore pas une
+% page entière, quelle que soit sa proportion (large ou verticale).
+\newcommand{\screenshot}[2]{%
+  \IfFileExists{#1}{\includegraphics[width=\linewidth,height=0.42\textheight,keepaspectratio]{#1}}{%
+    \fbox{\parbox[c][3.2cm][c]{0.95\linewidth}{\centering\itshape
+      [Capture d'écran à insérer]\\\ttfamily #1\\[2pt]\normalfont\small #2}}}}
+
 \captionsetup{font=small,labelfont=bf}
 \setlist{nosep,leftmargin=1.4em}
 \setlength{\parskip}{2pt}
@@ -36,6 +46,141 @@ eulérien. Nous comparons trois scénarios de priorisation (axes structurants,
 services essentiels, coût minimal) au moyen d'indicateurs génériques et
 spécifiques, et nous en analysons l'impact à l'aide d'une matrice éthique.
 \end{abstract}
+
+\section{Les scénarios de priorisation et leur justification}
+
+\subsection{Pourquoi ces trois scénarios ?}
+Déneiger une ville n'est pas qu'un problème technique : c'est une \textbf{décision
+publique} qui répartit une ressource rare (les heures de déneigeuse) entre des
+usagers aux intérêts divergents. Or cette décision est tiraillée par trois
+objectifs légitimes mais \emph{inconciliables} simultanément :
+\begin{itemize}
+\item la \textbf{fluidité} du trafic et de l'économie (remettre les grands axes
+et les circuits de bus en circulation au plus vite) ;
+\item la \textbf{sécurité et l'équité d'accès} (garantir d'abord l'accès aux
+hôpitaux, écoles, casernes et aux populations vulnérables) ;
+\item la \textbf{maîtrise budgétaire} (déneiger au moindre coût pour le
+contribuable).
+\end{itemize}
+Chacun de ces objectifs est défendu par des parties prenantes réelles et
+correspond à des arbitrages effectivement débattus à Montréal : la Ville
+priorise déjà le réseau artériel et les circuits d'autobus~\cite{vdm,new18},
+tandis que le coût du déneigement est un enjeu politique récurrent~\cite{lef19,vezina20}.
+
+Nous avons donc retenu \textbf{trois scénarios qui incarnent chacun l'un de ces
+objectifs à l'état pur} : S1 (fluidité), S2 (sécurité/équité), S3 (coût). Ils ne
+sont pas des recettes à appliquer telles quelles, mais les \textbf{sommets du
+triangle de décision} : ils bornent l'espace des compromis possibles. Toute
+politique réaliste étant une pondération de ces trois extrêmes, comparer les
+extrêmes rend visibles, et chiffrables, les tensions qu'un décideur doit
+arbitrer (cf. la recommandation hybride, §\ref{sec:reco}). C'est précisément ce
+que notre outil permet de mesurer.
+
+\subsection{Définition des trois scénarios}
+Les trois scénarios traitent l'\textbf{intégralité} de la voirie ; ils diffèrent
+par l'\emph{ordre} de traitement. La priorisation repose sur la classification
+fonctionnelle des rues (axes structurants, voies collectrices, desserte locale)
+et sur la proximité des services essentiels.
+
+\paragraph{S1 — Axes d'abord (fluidité du trafic).} On déneige d'abord les axes
+structurants, puis les collectrices, puis la desserte locale. \emph{Argumentaire}
+: la politique réelle de la Ville de Montréal traite en priorité le réseau
+artériel et les circuits d'autobus pour éviter la paralysie économique~\cite{vdm,new18}.
+\emph{Bénéfices / cibles} : automobilistes, transport collectif, activité
+économique ; remise en circulation rapide des grands axes. \emph{Risques} :
+les rues résidentielles et certains services restent enneigés longtemps ;
+déplacements à vide accrus. \emph{Indicateur} : temps de remise en service des
+axes structurants.
+
+\paragraph{S2 — Services essentiels (sécurité et accès).} On déneige d'abord les
+rues bordant hôpitaux, écoles, casernes et arrêts de transport. \emph{Argumentaire}
+: l'accès des secours et des populations vulnérables est un objectif de sécurité
+publique reconnu~\cite{vdm}. \emph{Bénéfices / cibles} : patients, élèves,
+personnes à mobilité réduite, services d'urgence. \emph{Risques} : services
+dispersés $\Rightarrow$ déplacements à vide très élevés et coût accru ; le reste
+du réseau est déneigé tardivement. \emph{Indicateur} : temps de remise en service
+des rues « services essentiels ».
+
+\paragraph{S3 — Coût minimal (référence budgétaire).} Aucune priorité : on
+minimise directement la distance (postier chinois pur). \emph{Argumentaire} : la
+pression budgétaire sur le déneigement est un enjeu récurrent à Montréal~\cite{lef19,vezina20}.
+\emph{Bénéfices / cibles} : contribuables, équilibre du budget municipal.
+\emph{Risques} : aucune garantie de service pour les axes ni les services
+sensibles ; équité non prise en compte. \emph{Indicateur} : coût total et
+distance à vide.
+
+\subsection{Analyse d'impact : une matrice éthique par scénario}
+Pour évaluer chaque scénario, nous appliquons la \emph{matrice
+éthique}~\cite{mepham2006}, qui croise les \textbf{parties prenantes} et trois
+familles de valeurs : \emph{bien-être} (utilitarisme : qui gagne/perd en
+confort et sécurité ?), \emph{autonomie} (déontologie : respecte-t-on les
+choix et droits des personnes ?) et \emph{justice} (équité : la charge et les
+bénéfices sont-ils répartis équitablement ?). Une matrice par scénario
+(Tab.~\ref{tab:ethique_s1}–\ref{tab:ethique_s3}) en révèle les tensions
+propres ($+$ effet favorable, $-$ défavorable, $\pm$ ambivalent).
+
+\begin{table}[H]
+\centering\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{2.6cm}p{4.0cm}p{3.7cm}p{3.8cm}}
+\toprule
+\multicolumn{4}{l}{\textbf{S1 — Axes d'abord} (fluidité du trafic)}\\
+\midrule
+Partie prenante & Bien-être & Autonomie & Justice\\
+\midrule
+Automobilistes / éco. & \textbf{$+$} axes dégagés en 3,6 h, trafic et bus rétablis vite & mobilité motorisée préservée & favorisés au détriment des usagers locaux\\
+Riverains résidentiels & \textbf{$-$} desserte locale déneigée en dernier & subissent l'ordre choisi sans consultation & \textbf{$-$} le transit prime sur le quartier\\
+Pop. vulnérables / secours & \textbf{$\pm$} secours fluides sur les axes, mais services de quartier (écoles) tardifs & accès facilité aux soins via le réseau structurant & \textbf{$-$} services de proximité négligés\\
+Municipalité / contribuables & \textbf{$+$} activité économique préservée & choix politique assumé et lisible & surcoût modéré ($+15\,\%$) à justifier\\
+\bottomrule
+\end{tabular}
+\caption{Matrice éthique du scénario S1.}
+\label{tab:ethique_s1}
+\end{table}
+
+\begin{table}[H]
+\centering\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{2.6cm}p{4.0cm}p{3.7cm}p{3.8cm}}
+\toprule
+\multicolumn{4}{l}{\textbf{S2 — Services essentiels} (sécurité et accès)}\\
+\midrule
+Partie prenante & Bien-être & Autonomie & Justice\\
+\midrule
+Automobilistes / éco. & \textbf{$-$} axes dégagés tard (39,8 h), trafic ralenti & mobilité motorisée non prioritaire & transit sacrifié au profit du soin\\
+Riverains résidentiels & \textbf{$-$} rues locales déneigées très tard & subissent l'ordre choisi & \textbf{$\pm$} équité d'accès aux services, mais attente longue chez soi\\
+Pop. vulnérables / secours & \textbf{$+$} accès soins/écoles prioritaire (16,4 h) & meilleure autonomie d'accès aux soins & \textbf{$+$} corrige une inégalité d'accès\\
+Municipalité / contribuables & \textbf{$-$} scénario le plus coûteux (990 \$, 81\,\% à vide) & engagement de sécurité publique assumé & charge budgétaire au nom de l'équité\\
+\bottomrule
+\end{tabular}
+\caption{Matrice éthique du scénario S2.}
+\label{tab:ethique_s2}
+\end{table}
+
+\begin{table}[H]
+\centering\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{2.6cm}p{4.0cm}p{3.7cm}p{3.8cm}}
+\toprule
+\multicolumn{4}{l}{\textbf{S3 — Coût minimal} (référence budgétaire)}\\
+\midrule
+Partie prenante & Bien-être & Autonomie & Justice\\
+\midrule
+Automobilistes / éco. & \textbf{$-$} aucun axe priorisé, tout dégagé à 26,4 h & aucune garantie de service & ni privilège ni pénalité\\
+Riverains résidentiels & \textbf{$\pm$} traités « comme tout le monde », mais tard & aucune priorité subie & \textbf{$+$} traitement uniforme de toutes les rues\\
+Pop. vulnérables / secours & \textbf{$-$} accès aux soins non garanti, possiblement en dernier & risque sanitaire non maîtrisé & \textbf{$-$} ignore les besoins différenciés\\
+Municipalité / contribuables & \textbf{$+$} coût minimal (824 \$, 20\,\% à vide), plus sobre & marge budgétaire préservée & équité non prise en compte, risque reporté\\
+\bottomrule
+\end{tabular}
+\caption{Matrice éthique du scénario S3.}
+\label{tab:ethique_s3}
+\end{table}
+
+Aucun scénario ne domine les autres sur les trois valeurs : S1 sert le bien-être
+des mobilités mais lèse la justice spatiale, S2 sert la justice et la sécurité
+mais au prix du bien-être collectif et du budget, S3 préserve le budget mais
+abandonne toute garantie de service. Ce constat motive l'analyse chiffrée
+(§\ref{sec:resultats}) et la recommandation hybride (§\ref{sec:reco}).
 
 \section{Formalisation et méthode de résolution}
 
@@ -171,63 +316,8 @@ considéré ; le déneigement est supposé instantané au passage (pas de file
 d'attente de chargement). Ces limites sont acceptables pour comparer des
 \emph{scénarios} à l'échelle d'une journée type.
 
-\section{Trois scénarios de priorisation}
-Les trois scénarios traitent l'\textbf{intégralité} de la voirie ; ils diffèrent
-par l'\emph{ordre} de traitement. La priorisation repose sur la classification
-fonctionnelle des rues (axes structurants, voies collectrices, desserte locale)
-et sur la proximité des services essentiels.
-
-\paragraph{S1 — Axes d'abord (fluidité du trafic).} On déneige d'abord les axes
-structurants, puis les collectrices, puis la desserte locale. \emph{Argumentaire}
-: la politique réelle de la Ville de Montréal traite en priorité le réseau
-artériel et les circuits d'autobus pour éviter la paralysie économique~\cite{vdm,new18}.
-\emph{Bénéfices / cibles} : automobilistes, transport collectif, activité
-économique ; remise en circulation rapide des grands axes. \emph{Risques} :
-les rues résidentielles et certains services restent enneigés longtemps ;
-déplacements à vide accrus. \emph{Indicateur} : temps de remise en service des
-axes structurants.
-
-\paragraph{S2 — Services essentiels (sécurité et accès).} On déneige d'abord les
-rues bordant hôpitaux, écoles, casernes et arrêts de transport. \emph{Argumentaire}
-: l'accès des secours et des populations vulnérables est un objectif de sécurité
-publique reconnu~\cite{vdm}. \emph{Bénéfices / cibles} : patients, élèves,
-personnes à mobilité réduite, services d'urgence. \emph{Risques} : services
-dispersés $\Rightarrow$ déplacements à vide très élevés et coût accru ; le reste
-du réseau est déneigé tardivement. \emph{Indicateur} : temps de remise en service
-des rues « services essentiels ».
-
-\paragraph{S3 — Coût minimal (référence budgétaire).} Aucune priorité : on
-minimise directement la distance (postier chinois pur). \emph{Argumentaire} : la
-pression budgétaire sur le déneigement est un enjeu récurrent à Montréal~\cite{lef19,vezina20}.
-\emph{Bénéfices / cibles} : contribuables, équilibre du budget municipal.
-\emph{Risques} : aucune garantie de service pour les axes ni les services
-sensibles ; équité non prise en compte. \emph{Indicateur} : coût total et
-distance à vide.
-
-\subsection{Analyse d'impact : matrice éthique}
-La matrice éthique~\cite{mepham2006} croise les parties prenantes et trois
-familles de valeurs : \emph{bien-être} (utilitarisme), \emph{autonomie}
-(déontologie) et \emph{justice} (équité). Le tableau~\ref{tab:ethique} fait
-apparaître les tensions propres à chaque scénario.
-
-\begin{table}[H]
-\centering\small
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{p{2.6cm}p{4.1cm}p{4.0cm}p{4.0cm}}
-\toprule
-Partie prenante & Bien-être & Autonomie & Justice\\
-\midrule
-Automobilistes / éco. & \textbf{S1+} axes dégagés vite ; \textbf{S2/S3$-$} trafic ralenti & S1 favorise la mobilité motorisée & S1 avantage le transit au détriment du local\\
-Riverains résidentiels & \textbf{S1/S2$-$} rues locales déneigées en dernier & subissent l'ordre choisi sans consultation & \textbf{S3$+$} traite tout le monde « pareil », mais tard\\
-Pop. vulnérables / secours & \textbf{S2+} accès hôpitaux/écoles prioritaire & meilleure capacité d'accès aux soins & \textbf{S2+} corrige une inégalité d'accès\\
-Municipalité / contribuables & \textbf{S3+} coût minimal ; \textbf{S2$-$} coût élevé & marge budgétaire préservée (S3) & arbitrage coût/équité à assumer\\
-\bottomrule
-\end{tabular}
-\caption{Matrice éthique des trois scénarios ($+$ effet favorable, $-$ défavorable).}
-\label{tab:ethique}
-\end{table}
-
 \section{Analyse des résultats}
+\label{sec:resultats}
 On illustre sur \textbf{Anjou} (220{,}6 km de voirie, seul secteur réunissant les
 trois classes de rues), puis on généralise aux quatre secteurs.
 
@@ -332,12 +422,104 @@ fin de tournée ; en cas d'épisode intense, le risque sanitaire et économique
 n'est pas maîtrisé.
 
 \subsection{Critique et recommandation}
+\label{sec:reco}
 Aucun scénario n'est globalement supérieur : S3 est \emph{efficient} mais
 \emph{aveugle au service}, S1 sert la mobilité mais néglige l'équité, S2 sert
 l'équité mais coûte cher et retarde la majorité. En pratique, une politique
 \emph{hybride} — services essentiels et axes structurants en première vague,
 puis desserte locale au coût minimal — combinerait l'essentiel des bénéfices ;
 notre outil permet d'en chiffrer le compromis. Bien que l'introduction du couplage par Algorithme Hongrois limite drastiquement les redondances inter-passes, la forte part de déplacements à vide due au postier rural constitue encore une borne supérieure : un solveur de tournées plus complexe la réduirait encore, sans pour autant changer l'ordre de nos conclusions.
+
+\section{Logiciel livré et rendu}
+\label{sec:logiciel}
+Le rendu ne se limite pas à ce rapport : nous livrons un \textbf{logiciel
+complet}, à la fois bibliothèque Python réutilisable et application interactive.
+
+\subsection{Architecture et chaîne de traitement}
+Le code est organisé en un paquet \texttt{src/} (modules testés
+indépendamment, \texttt{tests/}) piloté par une application web
+\texttt{app/streamlit\_app.py}. La chaîne de traitement est entièrement
+automatisée, du téléchargement des données au rendu :
+\begin{enumerate}
+\item \textbf{Extraction} du réseau routier et des services essentiels depuis
+OpenStreetMap (\texttt{osmnx}, module \texttt{io\_osm}) ;
+\item \textbf{Annotation} des rues par classe de priorité et proximité d'un
+service essentiel (\texttt{priorities}) ;
+\item \textbf{Résolution} du postier chinois / rural dirigé par flot à coût
+minimum et circuit eulérien (\texttt{cpp}, \texttt{scenarios}) ;
+\item \textbf{Dimensionnement de la flotte} par découpage des passes et couplage
+optimal (algorithme hongrois, \texttt{fleet}) ;
+\item \textbf{Indicateurs} : coût, temps de remise en service, accessibilité de
+la population aux services essentiels (\texttt{cost}, \texttt{accessibility}) ;
+\item \textbf{Restitution} : carte interactive animée (\texttt{viz}, Folium) et
+export ZIP (\texttt{exports}).
+\end{enumerate}
+On peut, en outre, simuler des \textbf{tronçons en travaux} (rues fermées) : le
+réseau et les tournées sont alors recalculés.
+
+\subsection{L'application interactive}
+L'utilisateur choisit dans la barre latérale un \emph{secteur}, un
+\emph{scénario}, un \emph{nombre de déneigeuses} et un nombre de
+\emph{tronçons en travaux}, puis lance la simulation. L'application affiche les
+indicateurs clés, une carte où les déneigeuses sont animées dans le temps
+(curseur de lecture), des graphiques (accessibilité, coût en fonction de la
+flotte) et des tableaux comparatifs.
+
+\begin{figure}[H]
+\centering
+\screenshot{figures/capture_accueil.png}{Barre latérale de configuration de la
+simulation : choix du secteur, du scénario de priorisation, du nombre de
+déneigeuses, des tronçons en travaux, du fond de carte et de l'animation.}
+\caption{Configuration de la simulation dans l'application.}
+\label{fig:capture_accueil}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\screenshot{figures/capture_carte.png}{Carte interactive : réseau coloré par
+priorité, marqueurs des services essentiels, déneigeuses animées (flocons) et
+légende. Placez le curseur de temps en cours de tournée pour montrer
+l'animation.}
+\caption{Carte interactive des tournées (avec, si possible, des tronçons en
+travaux pour illustrer le recalcul).}
+\label{fig:capture_carte}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\screenshot{figures/capture_graphiques.png}{Les deux graphiques (courbe
+d'accessibilité aux services essentiels dans le temps ; coût et temps de remise
+en service en fonction du nombre de déneigeuses) et les deux tableaux (remise en
+service par type de voie ; comparaison des trois scénarios).}
+\caption{Graphiques et tableaux de résultats.}
+\label{fig:capture_graphiques}
+\end{figure}
+
+\subsection{L'export des tournées}
+Le bouton d'export produit une archive ZIP contenant, \textbf{pour chaque
+déneigeuse} :
+\begin{itemize}
+\item une \textbf{trace GPS horodatée} (\texttt{gpx/vehicule\_$i$.gpx}) :
+au-delà du tracé, elle contient des \emph{points de passage} (waypoints)
+ordonnés indiquant, à chaque étape, \emph{quelle rue} déneiger ou parcourir à
+vide, \emph{quand} (heure de début et de fin) et sur quelle distance — lisibles
+dans n'importe quel visualiseur GPX ;
+\item une \textbf{feuille de route} (\texttt{feuilles\_de\_route/vehicule\_$i$.csv})
+: une ligne par étape (ordre, heure début/fin, action déneigement ou trajet à
+vide, rue, priorité, distance, kilométrage cumulé).
+\end{itemize}
+L'archive contient aussi un CSV de statistiques par véhicule, un GeoJSON de
+toutes les tournées et un résumé JSON de la configuration.
+
+\begin{figure}[H]
+\centering
+\screenshot{figures/capture_export.png}{À gauche : une trace \texttt{.gpx}
+ouverte dans un visualiseur (p. ex. \emph{GPX Studio} ou Google Earth) montrant
+le trajet et les points de passage horodatés. À droite : un extrait de la
+feuille de route \texttt{.csv} (étape, heure, action, rue).}
+\caption{Export d'une tournée : trace GPS horodatée et feuille de route.}
+\label{fig:capture_export}
+\end{figure}
 
 \begin{thebibliography}{9}\small
 \bibitem{edmonds1973} J.~Edmonds, E.~L.~Johnson. \emph{Matching, Euler tours and

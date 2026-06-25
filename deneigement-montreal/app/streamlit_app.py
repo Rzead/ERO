@@ -141,7 +141,7 @@ Aucun n'est globalement meilleur : c'est un **compromis** entre coût, fluidité
 Le curseur **« Tronçons en travaux »** ferme des rues (dans les deux sens) : le réseau et les tournées sont **recalculés** en conséquence (contournements, coût, accessibilité).
 
 ### Export
-Le bouton **« Exporter les traces GPS »** produit un ZIP : une **trace `.gpx` horodatée par déneigeuse**, un **CSV** de statistiques, un **GeoJSON** des tournées et un **résumé JSON**.
+Le bouton **« Exporter les traces GPS »** produit un ZIP : pour chaque déneigeuse une **trace `.gpx` horodatée** (avec des **points de passage** indiquant, dans l'ordre, *quelle rue déneiger ou parcourir à vide et à quelle heure*) et une **feuille de route `.csv`** (étape, heure début/fin, action, rue, priorité, distance) ; plus un **CSV** de statistiques, un **GeoJSON** des tournées et un **résumé JSON**.
 """
 
 
@@ -217,7 +217,7 @@ r1[3].metric("Accès services essentiels", f"{acc['final_pct']:.0f} %",
 zbytes = export_zip(cfg["sector"], cfg["scenario"], cfg["n_veh"],
                     cfg["n_blocked"], cfg["seed"])
 st.download_button(
-    "⬇️ Exporter les traces GPS des déneigeuses (ZIP : GPX + stats + GeoJSON)",
+    "⬇️ Exporter les traces GPS des déneigeuses (ZIP : GPX horodatés + feuilles de route + stats + GeoJSON)",
     data=zbytes,
     file_name=f"tournees_{cfg['sector']}_{cfg['scenario']}_{cfg['n_veh']}veh.zip",
     mime="application/zip", use_container_width=True)
